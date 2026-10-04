@@ -1,478 +1,687 @@
-/* Palette "claire" par défaut : couleurs neutres de l'interface (bg, surface,
-   texte, bordures) puis une couleur d'identité par langage, réutilisée pour
-   les onglets, les bandes de couleur des fiches et les boutons de l'accueil. */
+/* ==========================================================================
+   Risk at Work – feuille de style
+   D.A. : palette verte, fond vert profond éclairé par des halos,
+   blocs translucides teintés de vert.
+   ========================================================================== */
+
+/* ---------- Variables ---------- */
 :root {
-    --bg: #f6f5f2;
-    --surface: #ffffff;
-    --surface-2: #edece7;
-    --border: #ddd9d0;
-    --text: #1c1d1f;
-    --text-dim: #6a6d74;
-    --accent: #d534b2;
-    --accent-soft: #000000;
-    --code-bg: #1c1d1f;
-    --code-text: #e9e9e6;
-    --code-dim: #8b8d94;
-    --shadow: 0 1px 2px rgba(20,20,20,.04), 0 8px 24px rgba(20,20,20,.05);
-    --radius: 12px;
+  --vert-nuit: #031a14;
+  --vert-profond: #052a20;
+  --vert-foret: #0a4a38;
+  --vert: #007a55;
+  --menthe: #3ddc97;
+  --menthe-claire: #a8f0cf;
 
-    --accueil-color: #3457d5;
-    --c-color: #3457d5;
-    --cpp-color: #a2402c;
-    --arduino-color: #00878f;
-    --web-color: #6d3fd1;
-    --html-color: #c1440e;
-    --css-color: #1b5fc1;
-    --js-color: #9c7a00;
-    --python-color: #b58c00;
-    --git-color: #b0431e;
+  --surface: rgba(255, 255, 255, 0.06);
+  --surface-forte: rgba(255, 255, 255, 0.1);
+  --surface-opaque: rgba(6, 46, 35, 0.94);
+  --teinte: rgba(61, 220, 151, 0.12);
+  --bordure: rgba(168, 240, 207, 0.18);
+  --bordure-vive: rgba(61, 220, 151, 0.7);
+
+  --texte: #f1f8f5;
+  --texte-doux: #b3cdc2;
+
+  --police-titre: "Outfit", "Segoe UI", system-ui, sans-serif;
+  --police-texte: "Work Sans", "Segoe UI", system-ui, sans-serif;
+
+  --largeur: 1000px;
+  --rayon: 18px;
+  --rayon-petit: 12px;
+  --ombre: 0 18px 40px rgba(0, 0, 0, 0.28);
+  --transition: 220ms ease;
+}
+
+/* ---------- Base ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-padding-top: 16px;
+  background: var(--vert-profond);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--police-texte);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--texte);
+  /* Deux halos verts posés sur un dégradé sombre */
+  background:
+    radial-gradient(900px 520px at 12% -8%, rgba(61, 220, 151, 0.3), transparent 65%),
+    radial-gradient(1000px 640px at 105% 18%, rgba(0, 122, 85, 0.55), transparent 62%),
+    radial-gradient(900px 600px at 40% 110%, rgba(0, 122, 85, 0.35), transparent 65%),
+    linear-gradient(165deg, var(--vert-foret) 0%, var(--vert-profond) 45%, var(--vert-nuit) 100%);
+  background-attachment: fixed;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-family: var(--police-titre);
+  line-height: 1.2;
+}
+
+p {
+  margin: 0;
+}
+
+ul,
+ol,
+dl,
+dd {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: var(--menthe);
+}
+
+:focus-visible {
+  outline: 2px solid var(--menthe);
+  outline-offset: 3px;
+}
+
+.lien-evitement {
+  position: absolute;
+  left: 16px;
+  top: -60px;
+  z-index: 10;
+  padding: 10px 16px;
+  background: var(--vert-profond);
+  border: 1px solid var(--menthe);
+  border-radius: var(--rayon-petit);
+}
+
+.lien-evitement:focus {
+  top: 16px;
+}
+
+/* ---------- Bloc : la surface translucide commune à tout le site ---------- */
+.bloc {
+  background: linear-gradient(160deg, var(--surface-forte), var(--surface));
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+  box-shadow: var(--ombre);
+}
+
+/* ---------- En-tête ---------- */
+.entete {
+  position: relative;
+  width: 100%;
+  padding: 48px 16px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  text-align: center;
+}
+
+.logo {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  width: 72px;
+  height: 72px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(145deg, var(--menthe), var(--vert));
+  border-radius: 50%;
+  box-shadow: 0 10px 28px rgba(61, 220, 151, 0.35);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.logo:hover {
+  transform: scale(1.06);
+  box-shadow: 0 12px 34px rgba(61, 220, 151, 0.5);
+}
+
+.logo svg {
+  width: 36px;
+  height: 36px;
+  fill: none;
+  stroke: var(--vert-nuit);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.titre-site {
+  font-size: clamp(2.5rem, 7vw, 4.25rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+}
+
+.titre-site span {
+  color: var(--menthe);
+}
+
+.intro-site {
+  max-width: 600px;
+  font-size: 1.125rem;
+  color: var(--texte-doux);
+}
+
+/* ---------- Navigation entre les risques ---------- */
+.navigation {
+  position: sticky;
+  top: 12px;
+  z-index: 5;
+  width: fit-content;
+  max-width: calc(100% - 32px);
+  margin: 32px auto 0;
+  padding: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px;
+  /* Plus opaque que les autres blocs : le contenu défile dessous */
+  background: var(--surface-opaque);
+  border-radius: 999px;
+}
+
+.navigation a {
+  min-height: 44px;
+  padding: 0 18px;
+  display: inline-flex;
+  align-items: center;
+  font-weight: 500;
+  color: var(--texte);
+  text-decoration: none;
+  border-radius: 999px;
+  transition: background-color var(--transition), color var(--transition);
+}
+
+.navigation a:hover {
+  background: var(--teinte);
+  color: var(--menthe-claire);
+}
+
+.navigation a[aria-current="page"] {
+  color: var(--vert-nuit);
+  background: linear-gradient(145deg, var(--menthe-claire), var(--menthe));
+  font-weight: 600;
+}
+
+/* ---------- Contenu ---------- */
+.contenu {
+  flex: 1;
+  width: calc(100% - 32px);
+  max-width: var(--largeur);
+  margin: 0 auto;
+  padding: 36px 0 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.contenu:focus {
+  outline: none;
+}
+
+/* ---------- Accueil : cartes des risques (2 + 2 + 1) ---------- */
+.cartes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+  max-width: 780px;
+  margin: 0 auto 24px;
+}
+
+.carte {
+  position: relative;
+  overflow: hidden;
+  flex: 0 1 calc(50% - 12px);
+  padding: 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: var(--texte);
+  text-decoration: none;
+  transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+
+/* Liseré menthe qui se déploie en haut de la carte au survol */
+.carte::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--menthe), var(--vert));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--transition);
+}
+
+.carte:hover {
+  border-color: var(--bordure-vive);
+  transform: translateY(-5px);
+  box-shadow: 0 22px 48px rgba(0, 0, 0, 0.38), 0 0 0 1px rgba(61, 220, 151, 0.15);
+}
+
+.carte:hover::before {
+  transform: scaleX(1);
+}
+
+.carte-entete {
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.carte-numero {
+  font-family: var(--police-titre);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--menthe);
+}
+
+/* Icône dans une pastille teintée */
+.icone {
+  width: 48px;
+  height: 48px;
+  padding: 11px;
+  flex-shrink: 0;
+  fill: none;
+  stroke: var(--menthe);
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  background: var(--teinte);
+  border-radius: 14px;
+}
+
+.carte h2 {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.carte p {
+  flex: 1;
+  color: var(--texte-doux);
+}
+
+.carte-lien {
+  margin-top: 4px;
+  font-weight: 600;
+  color: var(--menthe);
+}
+
+.carte-lien span {
+  display: inline-block;
+  transition: transform var(--transition);
+}
+
+.carte:hover .carte-lien span {
+  transform: translateX(4px);
+}
+
+/* ---------- Rubriques (accueil et détail) ---------- */
+.rubrique {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.bloc.rubrique {
+  padding: 28px 32px;
+}
+
+.rubrique h2 {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.rubrique h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--menthe);
+}
+
+.rubrique ul,
+.rubrique ol {
+  padding-left: 1.2em;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.rubrique li::marker {
+  color: var(--menthe);
+}
+
+.grille-deux {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.note {
+  font-size: 0.9rem;
+  color: var(--texte-doux);
+}
+
+/* Chiffres clés de l'accueil */
+.rubrique .chiffres {
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.chiffres li {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: var(--teinte);
+  border-radius: var(--rayon-petit);
+}
+
+.chiffres strong {
+  font-family: var(--police-titre);
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--menthe-claire);
+}
+
+.chiffres span {
+  font-size: 0.9rem;
+  color: var(--texte-doux);
+}
+
+/* Listes numérotées : numéro dans une pastille */
+.rubrique .liste-numerotee {
+  padding-left: 0;
+  list-style: none;
+  counter-reset: etape;
+  gap: 10px;
+}
+
+.liste-numerotee li {
+  counter-increment: etape;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.liste-numerotee li::before {
+  content: counter(etape);
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  font-family: var(--police-titre);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--menthe);
+  background: var(--teinte);
+  border-radius: 50%;
+}
+
+.glossaire {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.glossaire dt {
+  display: inline;
+  font-weight: 600;
+  color: var(--menthe);
+}
+
+.glossaire dt::after {
+  content: " – ";
+  color: var(--texte-doux);
+}
+
+.glossaire dd {
+  display: inline;
+  color: var(--texte-doux);
+}
+
+/* ---------- Détail d'un risque ---------- */
+.titre-risque {
+  align-self: flex-start;
+  padding: 14px 28px 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.titre-risque h2 {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: clamp(1.4rem, 3vw, 1.85rem);
+  font-weight: 600;
+}
+
+.description {
+  padding: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.chiffre-cle {
+  padding: 24px 28px;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  background: linear-gradient(120deg, rgba(61, 220, 151, 0.2), rgba(61, 220, 151, 0.05));
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon-petit);
+}
+
+.chiffre-cle strong {
+  font-family: var(--police-titre);
+  font-size: clamp(2.25rem, 6vw, 3.25rem);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--menthe);
+  white-space: nowrap;
+}
+
+.chiffre-cle span {
+  max-width: 60ch;
+}
+
+.description .grille-deux {
+  gap: 32px;
+}
+
+/* Rubrique mise en avant (loi, liste de vérification) */
+.encadre {
+  padding: 22px 26px;
+  background: var(--teinte);
+  border-left: 3px solid var(--menthe);
+  border-radius: var(--rayon-petit);
+}
+
+.rubrique .liste-validee {
+  padding-left: 0;
+  list-style: none;
+}
+
+.liste-validee li {
+  position: relative;
+  padding-left: 26px;
+}
+
+.liste-validee li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 0.45em;
+  width: 12px;
+  height: 6px;
+  border-left: 2px solid var(--menthe);
+  border-bottom: 2px solid var(--menthe);
+  transform: rotate(-45deg);
+}
+
+.rubrique .liste-a-cocher {
+  padding-left: 0;
+  list-style: none;
+  gap: 2px;
+}
+
+.liste-a-cocher label {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.liste-a-cocher input {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  accent-color: var(--menthe);
+  cursor: pointer;
+}
+
+.liste-a-cocher input:checked + span {
+  color: var(--texte-doux);
+  text-decoration: line-through;
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.pagination a {
+  min-height: 48px;
+  padding: 10px 22px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+  color: var(--texte);
+  text-decoration: none;
+  border-radius: 999px;
+  transition: border-color var(--transition), color var(--transition);
+}
+
+.pagination a:hover {
+  color: var(--menthe);
+  border-color: var(--bordure-vive);
+}
+
+/* ---------- Pied de page ---------- */
+.pied {
+  padding: 20px 16px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px 24px;
+  font-size: 0.9rem;
+  color: var(--texte-doux);
+  background: rgba(3, 26, 20, 0.7);
+  border-top: 1px solid var(--bordure);
+}
+
+/* Logo du lycée : fond transparent, éclairci pour rester lisible sur le vert sombre */
+.pied-logo {
+  width: auto;
+  height: 64px;
+  filter: brightness(1.3);
+}
+
+.pied-texte strong {
+  color: var(--texte);
+}
+
+/* ---------- Écrans moyens : logo dans le flux, navigation non collante ---------- */
+@media (max-width: 860px) {
+  .entete {
+    padding-top: 32px;
   }
 
-
-  * { box-sizing: border-box; }
-
-  body {
-    background-color: var(--bg);
-    /* Halo dégradé multicolore, fixé au viewport (pas au contenu) : il reste
-       visible en haut de l'écran quoi qu'on fasse défiler en dessous. */
-    background-image:
-      radial-gradient(ellipse 45vw 40vh at 18% 0%, color-mix(in srgb, var(--accent) 20%, transparent) 0%, transparent 70%),
-      radial-gradient(ellipse 45vw 40vh at 82% 8%, color-mix(in srgb, var(--web-color) 18%, transparent) 0%, transparent 70%),
-      radial-gradient(ellipse 50vw 35vh at 50% 28%, color-mix(in srgb, var(--html-color) 12%, transparent) 0%, transparent 70%);
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    color: var(--text);
-    font-family: 'Manrope', system-ui, -apple-system, "Segoe UI", sans-serif;
-    padding-inline: 0;
-    -webkit-font-smoothing: antialiased;
+  .logo {
+    position: static;
   }
 
-  /* Conteneur centré de toute la page ; sa largeur borne aussi la largeur
-     des grilles de fiches (.cards, .intro-grid) puisqu'elles héritent de lui. */
-  .page {
-    max-width: 1240px;
-    margin: 0 auto;
-    padding-inline: 24px;
-    padding-block: 32px 72px;
+  .navigation {
+    position: static;
+    border-radius: 28px;
   }
 
-  /* En-tête : titre, accroche et compteur, centrés comme une vraie page d'accueil. */
-  header.hero {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 12px;
-    padding-block: 40px 34px;
-    margin-bottom: 8px;
+  .rubrique .chiffres {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  header.hero .eyebrow {
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
-    font-size: 11.5px;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    color: var(--accent);
-    background: var(--accent-soft);
-    border-radius: 999px;
-    padding: 6px 16px;
-  }
-  header.hero h1 {
-    font-family: 'Sora', system-ui, sans-serif;
-    font-weight: 700;
-    font-size: clamp(28px, 5vw, 42px);
-    margin: 0;
-    text-wrap: balance;
-  }
-  header.hero p {
-    color: var(--text-dim);
-    margin: 0;
-    margin-inline: auto;
-    font-size: 15px;
-    line-height: 1.6;
-    max-width: 62ch;
-  }
-  header.hero p code {
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
-    font-size: 12.5px;
-    background: var(--surface-2);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 1px 5px;
-    color: var(--text);
-  }
-  header.hero .meta {
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
-    font-size: 11.5px;
-    color: var(--text-dim);
-    margin-top: 2px;
+}
+
+/* ---------- Petits écrans : tout sur une colonne ---------- */
+@media (max-width: 640px) {
+  .carte {
+    flex-basis: 100%;
   }
 
-  /* Barre collante (recherche + onglets) : reste visible en haut au scroll.
-     Fond semi-transparent + flou plutôt qu'une couleur pleine, pour laisser
-     deviner le dégradé du body derrière au lieu d'une bande unie tranchée. */
-  .controls {
-    position: sticky;
-    top: env(safe-area-inset-top, 0px);
-    z-index: 5;
-    background: color-mix(in srgb, var(--bg) 78%, transparent);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    padding-block: 12px 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 18px;
+  .grille-deux {
+    grid-template-columns: 1fr;
   }
 
-  .search-row {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    align-items: center;
-  }
-  .search-row .field { position: relative; flex: 0 1 560px; }
-  .search-row input {
-    width: 100%;
-    font: inherit;
-    font-size: 15px;
-    padding: 12px 18px 12px 40px;
-    border-radius: 999px;
-    border: 1px solid var(--border);
-    background: var(--surface);
-    color: var(--text);
-    outline: none;
-    box-shadow: var(--shadow);
-  }
-  .search-row input:focus {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px var(--accent-soft);
-  }
-  .search-row svg {
-    position: absolute;
-    left: 16px;
-    top: 50%;
-    translate: 0 -50%;
-    color: var(--text-dim);
-    pointer-events: none;
-  }
-  .count-badge {
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
-    font-size: 11.5px;
-    color: var(--text-dim);
-    white-space: nowrap;
-    flex: none;
+  .bloc.rubrique,
+  .description {
+    padding: 22px;
   }
 
-  /* Onglets principaux. --tab-color est posée en JS (voir buildTabs) sur
-     chaque bouton, avec la couleur du langage correspondant. */
-  .tabs {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 8px;
-    overflow-x: auto;
-    padding-bottom: 2px;
-    scrollbar-width: thin;
-  }
-  .tabs::-webkit-scrollbar { height: 6px; }
-  .tabs::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
-
-  .tab {
-    --tab-color: var(--accent);
-    flex: none;
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
-    font-size: 13px;
-    font-weight: 500;
-    padding: 8px 14px;
-    border-radius: 999px;
-    border: 1px solid var(--border);
-    background: var(--surface);
-    color: var(--text-dim);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    transition: background .15s, color .15s, border-color .15s;
-  }
-  .tab .dot {
-    width: 7px; height: 7px; border-radius: 50%;
-    background: var(--tab-color);
-    flex: none;
-  }
-  .tab:hover { border-color: var(--tab-color); color: var(--text); }
-  .tab[aria-selected="true"] {
-    background: var(--tab-color);
-    border-color: var(--tab-color);
-    color: #fff;
-  }
-  .tab[aria-selected="true"] .dot { background: #fff; }
-
-  /* Sous-onglets (HTML / CSS / JavaScript sous "Site Web"). Générés/masqués
-     dynamiquement par buildSubtabs() selon l'onglet principal actif. */
-  .subtabs {
-    display: flex;
-    justify-content: center;
-    gap: 6px;
-    flex-wrap: wrap;
-  }
-  .subtabs[hidden] { display: none; }
-
-  .subtab {
-    --tab-color: var(--accent);
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
-    font-size: 12px;
-    font-weight: 500;
-    padding: 5px 12px;
-    border-radius: 999px;
-    border: 1px solid var(--border);
-    background: transparent;
-    color: var(--text-dim);
-    cursor: pointer;
-    transition: background .15s, color .15s, border-color .15s;
-  }
-  .subtab:hover { border-color: var(--tab-color); color: var(--text); }
-  .subtab[aria-selected="true"] {
-    background: var(--tab-color);
-    border-color: var(--tab-color);
-    color: #fff;
-  }
-
-  /* Zone principale où render()/renderLang()/renderAccueil() injectent le
-     contenu : un .section-group par thème (ou par langage en recherche globale). */
-  .panels { display: flex; flex-direction: column; gap: 30px; }
-
-  .section-group {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-  /* --group-color est posée en JS (renderLang/renderGlobalSearch) sur le
-     .section-group parent : titre et soulignement reprennent la couleur du langage. */
-  .section-group h2 {
-    font-family: 'Sora', system-ui, sans-serif;
-    font-size: 12px;
-    letter-spacing: .07em;
-    text-transform: uppercase;
-    color: var(--group-color, var(--text-dim));
-    margin: 0;
-    padding-bottom: 6px;
-    border-bottom: 2px solid var(--group-color, var(--border));
-  }
-
-  .cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-    gap: 12px;
-    align-items: start;
-  }
-
-  /* Titre + accroche centrés au-dessus de la grille de langages, sur l'accueil. */
-  .accueil-lead {
-    text-align: center;
-    max-width: 60ch;
-    margin: 4px auto 28px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-  .accueil-lead h2 {
-    font-family: 'Sora', system-ui, sans-serif;
-    font-size: 20px;
-    font-weight: 700;
-    margin: 0;
-  }
-  .accueil-lead p {
-    margin: 0;
-    color: var(--text-dim);
-    font-size: 14px;
-    line-height: 1.6;
-  }
-
-  .intro-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 16px;
-  }
-
-  /* Carte de présentation d'un langage, sur l'accueil. --card-color est posée
-     en JS (makeIntroCard) depuis le champ "color" de accueil.js. */
-  .intro-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-top: 3px solid var(--card-color, var(--accent));
-    border-radius: 16px;
-    box-shadow: var(--shadow);
+  .chiffre-cle {
     padding: 20px;
-    display: flex;
     flex-direction: column;
-    gap: 8px;
-    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    align-items: flex-start;
+    gap: 12px;
   }
-  .intro-card:hover {
-    transform: translateY(-3px);
-    border-color: var(--card-color, var(--accent));
-    box-shadow: 0 2px 4px rgba(20,20,20,.06), 0 14px 28px rgba(20,20,20,.09);
-  }
-  .intro-emoji {
-    font-size: 24px;
-    line-height: 1;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
-    background: var(--surface-2);
-    background: color-mix(in srgb, var(--card-color, var(--accent)) 16%, var(--surface-2));
-  }
-  .intro-card h3 {
-    margin: 0;
-    font-family: 'Sora', system-ui, sans-serif;
-    font-size: 17px;
-    font-weight: 700;
-  }
-  .intro-tag {
-    margin: -4px 0 0;
-    font-size: 12.5px;
-    font-weight: 600;
-    color: var(--card-color, var(--accent));
-    font-style: italic;
-  }
-  .intro-text {
-    margin: 0;
-    font-size: 13.5px;
-    line-height: 1.6;
-    color: var(--text-dim);
-    flex: 1;
-  }
-  .intro-badge {
-    margin: 0;
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
-    font-size: 10.5px;
-    letter-spacing: .02em;
-    color: var(--text-dim);
-    background: var(--surface-2);
-    border-radius: 999px;
-    padding: 3px 9px;
-    align-self: flex-start;
-  }
-  .intro-btn {
-    align-self: flex-start;
-    margin-top: 6px;
-    font-family: 'Manrope', system-ui, sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-    color: #fff;
-    background: var(--card-color, var(--accent));
-    border: none;
-    border-radius: 999px;
-    padding: 8px 16px;
-    cursor: pointer;
-    transition: filter .15s, transform .15s;
-  }
-  .intro-btn:hover { filter: brightness(1.1); transform: translateX(1px); }
-  .intro-btn:focus-visible { outline: 2px solid var(--card-color, var(--accent)); outline-offset: 2px; }
 
-  /* Fiche de code (titre, description, extrait). --group-color vient du
-     .section-group ancêtre : chaque fiche hérite la couleur de sa section. */
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-top: 3px solid var(--group-color, var(--border));
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    overflow: hidden;
-    display: flex;
+  .titre-risque {
+    align-self: stretch;
+  }
+
+  .pied {
     flex-direction: column;
-    transition: transform .15s ease, border-color .15s ease, box-shadow .15s ease;
-  }
-  .card:hover {
-    transform: translateY(-2px);
-    border-color: var(--group-color, var(--accent));
-    box-shadow: 0 2px 4px rgba(20,20,20,.06), 0 14px 28px rgba(20,20,20,.09);
-  }
-  .card-head {
-    padding: 11px 14px 8px;
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-  }
-  .card-head h3 {
-    margin: 0;
-    font-size: 14px;
-    font-weight: 600;
-    font-family: 'Sora', system-ui, sans-serif;
-  }
-  .card-head p {
-    margin: 0;
-    font-size: 12.5px;
-    color: var(--text-dim);
-    line-height: 1.5;
-  }
-
-  /* Bloc de code : toujours sombre (même en thème clair), comme un terminal,
-     pour un bon contraste et une lecture identique dans les deux thèmes. */
-  .code-wrap {
-    position: relative;
-    background: var(--code-bg);
-  }
-  .code-wrap pre {
-    margin: 0;
-    padding: 12px 14px;
-    /* pre-wrap + overflow-wrap : le code retourne à la ligne au lieu de
-       nécessiter un défilement horizontal pour lire la fin d'une ligne. */
-    white-space: pre-wrap;
-    overflow-wrap: anywhere;
-    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
-    font-size: 12.3px;
-    line-height: 1.6;
-    color: var(--code-text);
-    tab-size: 2;
-  }
-
-  /* Bouton "Copier", superposé en haut à droite du bloc de code (voir makeCard). */
-  .copy-btn {
-    position: absolute;
-    top: 6px;
-    right: 6px;
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
-    font-size: 10.5px;
-    letter-spacing: .03em;
-    color: var(--code-dim);
-    background: rgba(255,255,255,.06);
-    border: 1px solid rgba(255,255,255,.12);
-    border-radius: 6px;
-    padding: 4px 8px;
-    cursor: pointer;
-    transition: background .15s, color .15s;
-  }
-  .copy-btn:hover { background: rgba(255,255,255,.14); color: var(--code-text); }
-  .copy-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
-  .copy-btn[data-copied="true"] { color: #7be0a0; border-color: #7be0a0; }
-
-  /* Message affiché quand une recherche ne trouve aucune fiche (voir .visible
-     posée par render()/renderLang()/renderGlobalSearch() côté JS). */
-  .empty-state {
     text-align: center;
-    color: var(--text-dim);
-    padding-block: 60px;
-    font-size: 14px;
-    display: none;
-  }
-  .empty-state.visible { display: block; }
-
-  /* Renforce l'attribut HTML natif "hidden" (utilisé pour masquer .subtabs). */
-  [hidden] { display: none !important; }
-
-  @media (max-width: 520px) {
-    .cards { grid-template-columns: 1fr; }
-    .count-badge { display: none; }
   }
 
-  /* Respecte les préférences d'accessibilité : coupe toutes les transitions
-     (hover, apparition, etc.) pour qui a demandé de réduire les animations. */
-  @media (prefers-reduced-motion: reduce) {
-    * { transition: none !important; }
+  .pagination {
+    flex-direction: column;
   }
+}
+
+/* ---------- Mouvement réduit ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before {
+    transition: none !important;
+  }
+
+  .carte:hover,
+  .logo:hover,
+  .carte:hover .carte-lien span {
+    transform: none;
+  }
+}

@@ -1,44 +1,63 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Risk At Work</title>
-  <meta name="description" content="Le pense-bête qu'on garde ouvert dans un coin : C, C++, Arduino, HTML, CSS, JavaScript, Python et Git expliqués simplement, pour les débutants comme pour les experts qui ont un trou de mémoire.">
+  <title>Risk at Work</title>
+  <meta name="author" content="Priam">
+  <meta name="description" content="Five common workplace risks explained: causes, consequences and solutions, based on UK Health and Safety Executive guidance.">
+  <!-- Icône d'onglet : le bouclier du logo, dessiné en SVG directement ici (aucun fichier image) -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cdefs%3E%3ClinearGradient id='d' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%233ddc97'/%3E%3Cstop offset='1' stop-color='%23007a55'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='12' cy='12' r='12' fill='url(%23d)'/%3E%3Cg fill='none' stroke='%23031a14' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round' transform='translate(2.4 2.4) scale(.8)'%3E%3Cpath d='M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z'/%3E%3Cpath d='M9 12l2 2 4-4'/%3E%3C/g%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Manrope:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Work+Sans:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <div class="page">
-    <header class="hero">
-      <h1>Risk At Work</h1>
-      <p>A hazard is anything that may cause harm, such as a wet floor or a chemical. A risk is the chance, high or low, that someone will be harmed by the hazard, together with how serious the harm could be. In the UK, employers must assess the risks in their workplace and take reasonable steps to control them under the Health and Safety at Work etc. Act 1974 and the Management of Health and Safety at Work Regulations 1999.</p>
-      <div class="meta" id="total-count"></div>
-    </header>
+  <a class="lien-evitement" href="#contenu">Skip to content</a>
 
-    <div class="controls">
-      <div class="search-row">
-        <div class="field">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <input type="search" id="search" placeholder="Rechercher (ex : malloc, printf, git rebase, lambda…)" autocomplete="off">
-        </div>
-        <span class="count-badge" id="count-badge"></span>
-      </div>
-      <div class="tabs" id="tabs" role="tablist"></div>
-      <div class="subtabs" id="subtabs" role="tablist" hidden></div>
+  <!-- En-tête commun aux deux vues : logo, titre, intro du site -->
+  <header class="entete">
+    <a class="logo" href="#accueil" aria-label="Risk at Work – home">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z"/>
+        <path d="M9 12l2 2 4-4"/>
+      </svg>
+    </a>
+
+    <h1 class="titre-site">Risk <span>at</span> Work</h1>
+
+    <p class="intro-site">
+      Five common workplace risks explained: their causes, their consequences
+      and the solutions recommended by the UK Health and Safety Executive (HSE).
+    </p>
+  </header>
+
+  <!-- Navigation entre les risques (remplie par js/app.js) -->
+  <nav class="bloc navigation" id="navigation" aria-label="Risks"></nav>
+
+  <!-- Contenu de la vue courante : accueil ou détail d'un risque -->
+  <main class="contenu" id="contenu" tabindex="-1">
+    <noscript>
+      <p class="bloc">This site needs JavaScript to display its content.</p>
+    </noscript>
+  </main>
+
+  <footer class="pied">
+    <img class="pied-logo" src="asset/logo_paul_langevin-beauvais.png" alt="Lycée Paul-Langevin" width="843" height="596">
+    <div class="pied-texte">
+      <p>&copy; 2026 Risk at Work &middot; Made by <strong>Priam</strong></p>
+      <p>Lycée Paul-Langevin, Beauvais</p>
+      <p>
+        Sources:
+        <a href="https://www.hse.gov.uk/" target="_blank" rel="noopener">Health and Safety Executive</a>
+        &middot;
+        <a href="https://www.gov.uk/" target="_blank" rel="noopener">GOV.UK</a>
+      </p>
     </div>
+  </footer>
 
-    <div class="panels" id="panels"></div>
-    <div class="empty-state" id="empty">Aucun résultat. Essayez un autre mot-clé.</div>
-  </div>
-
-  <script src="js/data/accueil.js"></script>
-  <script src="js/data/risk1.js"></script>
-  <script src="js/data/risk2.js"></script>
-  <script src="js/data/risk3.js"></script>
-  <script src="js/data/risk4.js"></script>
-  <script src="js/data/risk5.js"></script>
+  <script src="js/donnees.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>
